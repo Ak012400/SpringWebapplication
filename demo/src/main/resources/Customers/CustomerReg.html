@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        .container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .container label {
+            font-weight: bold;
+            color: #555;
+        }
+        .container input[type="text"],
+        .container input[type="email"],
+        .container input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .container input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        .container input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Registration Form</h2>
+        <form id="registrationForm" action="/addcust" method="POST">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" maxlength="100" required>
+            
+            <label for="userId">User ID:</label>
+            <input type="text" id="userId" name="userId" maxlength="20" required>
+            
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" maxlength="100" required>
+            
+            <label for="cardNumber">Card Number:</label>
+            <input type="number" id="cardNumber" name="cardNumber" required>
+            
+            <label for="creditScore">Credit Score:</label>
+            <input type="number" id="creditScore" name="creditScore" required>
+            
+            <input type="submit" value="Register">
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            var cardNumber = document.getElementById('cardNumber').value;
+
+            // Regular Expression for validating credit card number format (strictly numeric)
+            var cardNumberPattern = /^[0-9]{16}$/;
+            if (!cardNumberPattern.test(cardNumber)) {
+                alert('Invalid card number. Please enter exactly 16 digits.');
+                event.preventDefault(); // Prevent form submission if validation fails
+            } else {
+                // Luhn Algorithm to check valid credit card format
+                if (!validateCreditCard(cardNumber)) {
+                    alert('Invalid credit card format. Please check the number.');
+                    event.preventDefault(); // Prevent form submission if validation fails
+                }
+            }
+
+            let Score=document.getElementById('creditScore').value;
+            if(parseInt(Score)>100){
+                alert('Credit Score should be between 0 and 100.');
+                event.preventDefault();
+            }
+        });
+
+        // Luhn Algorithm for validating the card number
+        function validateCreditCard(cardNumber) {
+            var sum = 0;
+            var shouldDouble = false;
+
+            for (var i = cardNumber.length - 1; i >= 0; i--) {
+                var digit = parseInt(cardNumber.charAt(i));
+
+                if (shouldDouble) {
+                    digit *= 2;
+                    if (digit > 9) {
+                        digit -= 9;
+                    }
+                }
+
+                sum += digit;
+                shouldDouble = !shouldDouble;
+            }
+
+            return (sum % 10) === 0;
+        }
+         
+          
+        
+    </script>
+</body>
+</html>

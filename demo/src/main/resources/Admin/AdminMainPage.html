@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #4CAF50; /* Green background */
+            color: white; /* White text */
+            padding: 40px; /* Increased padding */
+            text-align: center; /* Centered text */
+            position: relative;
+            border-bottom: 5px solid #388E3C; /* Darker green border at the bottom */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for 3D effect */
+        }
+        .header .admin {
+            position: absolute;
+            left: 20px;
+            font-size: 18px; /* Increased font size */
+        }
+        .header .logout {
+            position: absolute;
+            right: 20px;
+            font-size: 18px; /* Increased font size */
+        }
+        .options {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .options button {
+            padding: 15px 30px;
+            font-size: 16px;
+            margin: 0 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50; /* Green background for buttons */
+            color: white; /* White text */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for 3D effect */
+        }
+        .options button:hover {
+            background-color: #388E3C; /* Darker green on hover */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <span class="admin">Admin: ${adminName}</span>
+        <span class="logout"><a href='/admin' style="color: white; text-decoration: none;">Logout</a></span>
+    </div>
+
+    <div class="options">
+        <button onclick="window.location.href='/deletecustomer'">Delete Customer</button>
+        <button onclick="window.location.href='/customer'">Add Customer</button>
+    </div>
+
+</body>
+</html>

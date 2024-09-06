@@ -6,6 +6,76 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Hi India How are u All fine......</h1>
+   <div class="Heading-line">
+    <h1 class="line">This Page Where Customer and Admin Both Can Inter Act</h1>
+   </div>
+    <div class="body">
+        <div class="body-part">
+            <div class="admin-link"><a href="/admin">ADMIN</a></div>
+            <div class="customer-link"><a href="/customer">Customer</a></div>
+        </div>
+    </div>
+    <style>
+        /* Global Styles */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0; /* light gray background */
+}
+
+/* Heading Styles */
+
+.Heading-line {
+  background-color: #333; /* dark gray background */
+  color: #fff; /* white text */
+  padding: 20px;
+  text-align: center;
+}
+
+.line {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Body Styles */
+
+.body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* full height */
+  margin-top: 50px;
+}
+
+.body-part {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Link Styles */
+
+.admin-link, .customer-link {
+  margin: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #337ab7; /* blue color */
+}
+
+.admin-link:hover, .customer-link:hover {
+  color: #23527c; /* darker blue on hover */
+}
+
+.admin-link a, .customer-link a {
+  transition: color 0.2s ease;
+}
+    </style>
 </body>
 </html>

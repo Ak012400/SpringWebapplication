@@ -1,7 +1,6 @@
 package com.example.demo;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -9,6 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 
 @RestController
@@ -38,10 +40,20 @@ public class LogicController {
       return mView;
     }
     @GetMapping("/AdminRegistration")
-    public ModelAndView AdminReg(){
-
+    public ModelAndView AdminReg(HttpSession session,HttpServletResponse respose){
+       respose.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+      respose.setHeader("Pragma", "no-cache");
+      respose.setHeader("Expires","0");
       ModelAndView mView=new ModelAndView();
-      mView.setViewName("AdminR");
+     
+     
+      String sessionName=(String)session.getAttribute("adminame");
+      if(sessionName!=null){
+        mView.setViewName("AdminR");
+      }
+      else{
+        mView.setViewName("Admin");
+      }
       return mView;
     }
     @PostMapping("/addadmin")
@@ -70,7 +82,10 @@ public class LogicController {
       
     }
     @PostMapping("/addcust")
-    public String AddCustomer(@ModelAttribute Customers Cust){
+    public String AddCustomer(@ModelAttribute Customers Cust,HttpServletResponse response){
+      response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+      response.setHeader("Pragma", "no-cache");
+      response.setHeader("Expires","0");
       AllCoreLogic CardVerify=new AllCoreLogic();
       boolean ifuserIdexists=custrepo.existsCustomersByUserId(Cust.getUserId());
       boolean ifCardOk= CardVerify.IsCorrectCardNumber(Cust.getCardNumber());
@@ -105,7 +120,7 @@ public class LogicController {
       
     }
     @PostMapping("/AdminLogin")
-    public ModelAndView AdminLogin1(@RequestParam("userId") String userId,@RequestParam("password") String password){
+    public ModelAndView AdminLogin1(@RequestParam("userId") String userId,@RequestParam("password") String password,HttpSession Session){
       ModelAndView mv=new ModelAndView();
       try{
      boolean checkExistance= adminrepo.existsByUserId(userId);
@@ -122,6 +137,9 @@ public class LogicController {
       mv.setViewName("MainPageAjax");
       mv.addObject("adminname",userId);
       mv.addObject("loginsuccess", "logged");
+      Session.setAttribute("adminname", userId);
+      Session.setAttribute("password", password);
+      
       return mv;
     }
     else{
@@ -148,14 +166,37 @@ public class LogicController {
 
 
     @GetMapping("/adminmainpage")
-    public ModelAndView AdminMainPage(){
+    public ModelAndView AdminMainPage(HttpSession session,HttpServletResponse response){
       ModelAndView mView=new ModelAndView();
-      mView.setViewName("MainPageAjax");
+      response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+      response.setHeader("Pragma", "no-cache");
+      response.setHeader("Expires","0");
+      String CheckUserSession=(String)session.getAttribute("adminname");
+
+      //  Enumeration<String> attributeNames = session.getAttributeNames();
+      //   Map<String, Object> attributes = new HashMap<>();
+      //   while (attributeNames.hasMoreElements()) {
+      //       String attributeName = attributeNames.nextElement();
+      //       attributes.put(attributeName, session.getAttribute(attributeName));
+      //   }
+
+      //   // Add attributes to the model to view in Thymeleaf template
+      //   mView.addObject("session", attributes);
+      //   System.out.println(CheckUserSession+" -------this is the session of user");
+      if(CheckUserSession==null ||CheckUserSession.length()==0){
+        mView.setViewName("admin");
+      }
+      else{
+        mView.setViewName("MainPageAjax");
+      }
       return mView;
     }
    @PostMapping("/deleteCust")
-   public ModelAndView  deleteCustomer(@RequestParam("userId") String userId){
+   public ModelAndView  deleteCustomer(@RequestParam("userId") String userId,HttpServletResponse response){
     ModelAndView mv=new ModelAndView(); 
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+      response.setHeader("Pragma", "no-cache");
+      response.setHeader("Expires","0");
     mv.addObject("userdelete", "userdeletion");
     boolean IfuserExist=custrepo.existsCustomersByUserId(userId);
     if(IfuserExist==true){
@@ -172,7 +213,10 @@ public class LogicController {
     }
    }
    @GetMapping("deletecustomer")
-   public ModelAndView DeleteCustData(){
+   public ModelAndView DeleteCustData(HttpServletResponse resoponse){
+    resoponse.setHeader("Cache-Control","no-cache, no-store, must-revalidate");
+    resoponse.setHeader("Pragma", "no-cache");
+        resoponse.setHeader("Expires", "0");
     ModelAndView mv=new ModelAndView();
     mv.setViewName("deletecustomer");
     return mv;
@@ -186,7 +230,7 @@ public class LogicController {
    
  @PostMapping("/CardNumber")
  public String GetScore(@RequestParam("cardNumber") String CardNumber){
-  AllCoreLogic lg=new AllCoreLogic();
+   AllCoreLogic lg=new AllCoreLogic();
         boolean cardExists=custrepo.existsByCardNumber(Long.parseLong(CardNumber));
         boolean isValidNumber=lg.IsCorrectCardNumber(Long.parseLong(CardNumber));
         if(isValidNumber){
@@ -202,9 +246,21 @@ public class LogicController {
         else{
           return "<html><body><span>The CardNumber --"+CardNumber+" Is Not Valid</span></br><div align='center'><a href='customer'>TryAgain</></div></body></html>";
         }
-     
-
   
+ }
+
+
+ @GetMapping("/LogOut")
+  public ModelAndView testPage(HttpSession session,HttpServletResponse response){
+    response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+    response.setHeader("Pragma", "no-cache");
+    response.setHeader("Expires", "0");
+    session.removeAttribute("adminname");
+    session.invalidate();
+    ModelAndView mv=new ModelAndView();
+    mv.setViewName("admin");
+    return mv;
+  }
  }
 
 
@@ -212,4 +268,4 @@ public class LogicController {
 
 
 
-}
+

@@ -2,6 +2,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
     <title>Spring Boot Dynamic Content</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
@@ -93,7 +97,7 @@
     <!-- Header Section -->
     <div class="header">
         <span th:text="${adminname}">Admin Name</span>
-        <a href="/admin">Logout</a>
+        <a href="/LogOut">Logout</a>
     </div>
 
     <!-- Section for dynamic content -->

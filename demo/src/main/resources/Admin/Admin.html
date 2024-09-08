@@ -89,6 +89,12 @@
                 document.getElementById('error').style.display='none';
             },5000);
       })
+      window.addEventListener('pagehide', function(event) {
+    if (isSessionExpired()) {
+        window.location.href = '/admin';
+    }
+});
+
     </script>
 </body>
 </html>

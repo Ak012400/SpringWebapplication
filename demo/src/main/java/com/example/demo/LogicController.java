@@ -1,5 +1,9 @@
 package com.example.demo;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.tomcat.util.json.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +20,7 @@ import jakarta.servlet.http.HttpSession;
 @RestController
 @Controller
 public class LogicController {
+  private String SessionValue;
   @Autowired
    private AdminRepository adminrepo;
    @Autowired
@@ -37,8 +42,8 @@ public class LogicController {
     public ModelAndView AdminLogin(HttpSession session){
       ModelAndView mView=new ModelAndView();
      String  session1=(String)session.getAttribute("amdinname");
-     System.out.println(session1+"-------------------------this is thesession");
-     if(session1!=null){
+     System.out.println(session1+"-------------------------this is thesession for session value  "+SessionValue);
+     if(session1!=null || SessionValue!=null){
          mView.setViewName("MainPageAjax");
      }
      else{
@@ -146,6 +151,7 @@ public class LogicController {
       Session.setAttribute("adminname", userId);
       Session.setAttribute("password", password);
       String Session1=(String)Session.getAttribute("adminname");
+      SessionValue=Session1;
       System.out.println(Session1+"---------------Created..");
       return mv;
     }
@@ -194,7 +200,6 @@ public class LogicController {
       else{
         mView.setViewName("MainPageAjax");
       }
-
       System.out.println(CheckUserSession+"   ---------------");
       return mView;
     }
@@ -283,9 +288,27 @@ public class LogicController {
     response.setHeader("Expires", "0");
     session.removeAttribute("adminname");
     session.invalidate();
+    SessionValue=null;
     ModelAndView mv=new ModelAndView();
     mv.setViewName("admin");
     return mv;
+  }
+
+
+// this below method is for reading the
+//  paginated data from database over the query in Json format 
+//Just was testing for reading the json and now it's working properly....
+
+
+  @GetMapping("/httpMethod")
+  public ModelAndView callingMethod() throws IOException, ParseException{
+    List<String> value1=new ArrayList<String>();
+     value1=SelfImplemented.getArticleTitles("epaga");
+    ModelAndView mv=new ModelAndView();
+    mv.setViewName("httpform");
+    mv.addObject("author", value1);
+    return mv;
+
   }
  }
 

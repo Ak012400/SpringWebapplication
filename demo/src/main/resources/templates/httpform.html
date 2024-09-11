@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article Titles</title>
+</head>
+<body>
+    <h1>Articles List</h1>
+    
+    <ul>
+        <!-- Loop through the response and display each body in a list -->
+        <li th:each="article : ${response}" th:text="${article}"></li>
+        <li th:each="article : ${author}" th:text="${article}"></li>
+        <br><h1>There is something will pring if anything______________________________</h1>
+        <li th:text="${author}"></li>
+    </ul>
+
+</body>
+</html>

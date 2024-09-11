@@ -39,7 +39,7 @@
             font-size: 14px;
         }
 
-        input[type="text"], input[type="number"] {
+        select, input[type="submit"] {
             padding: 10px;
             margin-top: 5px;
             border: 1px solid #ccc;
@@ -48,11 +48,9 @@
 
         input[type="submit"] {
             margin-top: 20px;
-            padding: 10px;
             background-color: #4CAF50;
             color: white;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
         }
@@ -74,7 +72,13 @@
         <h2>Delete Customer</h2>
         <form action="/deleteCust" method="POST">
             <label for="userId">User ID:</label>
-            <input type="text" id="userId" name="userId" required>
+            <select id="userId" name="userId" required>
+                <option value="" disabled selected>Select User ID</option>
+                <!-- Iterate over UserIds and add them as options -->
+                <th:block th:each="customer : ${UserIds}">
+                    <option th:value="${customer.userId}" th:text="${customer.userId}"></option>
+                </th:block>
+            </select>
 
             <input type="submit" value="Delete Customer">
         </form>
@@ -82,6 +86,5 @@
             &copy; 2024 SpringBoot Application Demo
         </div>
     </div>
-    </script>
 </body>
 </html>

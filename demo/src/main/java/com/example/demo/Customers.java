@@ -22,5 +22,10 @@ private String userId;
 private String email;
 @Column(name="cardNumber", unique=true)
 private Long cardNumber;
+@Column(name="panCard",unique=true)
+private String panCard;
+@Column(name="password")
+private String password;
+@Column(name="creditScore")
 private int creditScore;
 }

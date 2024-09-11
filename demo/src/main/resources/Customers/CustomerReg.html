@@ -33,7 +33,8 @@
         }
         .container input[type="text"],
         .container input[type="email"],
-        .container input[type="number"] {
+        .container input[type="number"],
+        .container input[type="password"] {
             width: 100%;
             padding: 10px;
             margin: 8px 0;
@@ -71,6 +72,14 @@
             
             <label for="cardNumber">Card Number:</label>
             <input type="number" id="cardNumber" name="cardNumber" required>
+
+            <!-- New PAN Card field -->
+            <label for="panCard">PAN Card:</label>
+            <input type="text" id="panCard" name="panCard" maxlength="10" required>
+
+            <!-- New Password field -->
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
             
             <label for="creditScore">Credit Score:</label>
             <input type="number" id="creditScore" name="creditScore" required>
@@ -96,9 +105,9 @@
                 }
             }
 
-            let Score=document.getElementById('creditScore').value;
-            if(parseInt(Score)>100){
-                alert('Credit Score should be between 0 and 100.');
+            let Score = document.getElementById('creditScore').value;
+            if (parseInt(Score) >= 999999) {
+                alert('Invalid Score.');
                 event.preventDefault();
             }
         });
@@ -124,9 +133,6 @@
 
             return (sum % 10) === 0;
         }
-         
-          
-        
     </script>
 </body>
 </html>

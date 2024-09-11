@@ -10,5 +10,7 @@ Customers findCustomersByCardNumber(Long cardNumber);
 boolean   existsByCardNumber(Long cardNumber);
 boolean    existsCustomersByUserId(String userId);
 boolean    existsCustomersByEmail(String email);
+boolean    existsCustomersByPanCard(String panCard);
+Customers    findCustomersByPanCard(String panCard);
 
 }

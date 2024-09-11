@@ -16,8 +16,8 @@
                         <h1 class="card-title">Check Your Score</h1>
                         <form action="/CardNumber" method="post">
                             <div class="mb-3">
-                                <label for="cardNumber" class="form-label">Enter Your Valid Card Number</label>
-                                <input type="text" name="cardNumber" id="cardNumber" class="form-control" maxlength="16" pattern="\d{16}" placeholder="Enter Your Card Number" required>
+                                <label for="panCard" class="form-label">Enter Your Valid Card Number</label>
+                                <input type="text" name="panCard" id="panCard" class="form-control" maxlength="16" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" placeholder="Enter Your Card Number" required>
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Check</button>
                         </form>
